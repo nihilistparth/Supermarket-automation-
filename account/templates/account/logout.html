@@ -1,0 +1,16 @@
+{% extends 'account/base.html' %}
+
+{% block content %}
+<br>
+<div class="content-section container">
+    <h2>You have been Logged out</h2>
+
+    <div class="pt-3">
+        <small class="text-muted">
+           <button type="button" class="btn btn-primary"><a href="{% url 'account-login' %}" class="text-decoration-none" style="color: white;">Login Again</a></button>
+        </small>
+    </div>
+
+</div>
+
+{% endblock %}

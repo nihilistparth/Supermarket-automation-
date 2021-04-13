@@ -1,0 +1,38 @@
+{% extends 'product/base.html' %}
+
+{% block content %}
+<br>
+
+<h3>Click on the product name to edit!!</h3>
+
+<br>
+
+<div class="row text-muted border-bottom mb-2">
+    <div class="col-2 pl-5">Name</div>
+    <div class="col-1 px-0">Quantity</div>
+    <div class="col-1 px-0">Cost Price</div>
+    <div class="col-1 px-0">Selling Price</div>
+    <div class="col-2 px-0">Action</div>
+
+</div>
+
+{% for product in product_list %}
+    <div class="parent">
+        <div class="row highlight bg-light mb-2 py-2">
+            
+            <div class="col-2 pl-5">{{ product.name }}</div>
+            <div class="col-1 px-0">{{ product.quantity }}</div>
+            <div class="col-1 px-0">{{ product.cost_price }}</div>
+            <div class="col-1 px-0">{{ product.selling_price }}</div>
+            <div class="col-2 px-0">
+                <form action="{% url 'product_edit_util' product.id%}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-sm btn-danger">Edit</button>
+                </form>
+            </div>
+            
+    </div>
+
+{% endfor %}
+
+{% endblock %}

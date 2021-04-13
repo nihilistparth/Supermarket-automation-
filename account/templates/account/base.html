@@ -1,0 +1,115 @@
+{% load static %}
+<!DOCTYPE html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
+
+<!-- custom css -->
+<link href="{% static 'account/style.css' %}" rel="stylesheet">
+
+<!-- Google fonts -->
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
+
+{% block title %}
+<title>Account</title>
+{% endblock title %}
+
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="{% url 'account-home' %}">Super Market Automation Software</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'account-home' %}">Home</a>
+        </li>
+
+
+        <!-- For the users who have logged in -->
+        {% if user.is_authenticated %}
+
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'account-profile' %}">Profile</a>
+        </li>
+
+        <!-- For super_user only -->
+
+        {% if user.is_superuser %}
+        
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'product-report' %}">Create Report</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'product-home' %}">Edit Inventory</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'account-user-edit' %}">Edit Users</a>
+        </li>
+
+
+        <!-- For non super_users -->
+
+        {% else %}
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'product-transaction' %}">Transactions</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'product-view' %}">View Inventory</a>
+        </li>
+
+        {% endif %}
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'account-logout' %}">Logout</a>
+        </li>
+
+
+        <!-- For the users who are not logged in -->
+        {% else %}
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'account-login' %}">Login</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'account-register' %}">Register</a>
+        </li>
+
+        {% endif %}
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{% if messages %}
+{% for message in messages %}
+    <div class="alert alert-{{message.tags}}"> {{message}} </div>
+{% endfor %}
+{% endif %}
+
+{% block content %}
+
+{% endblock %}
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.1/dist/umd/popper.min.js" integrity="sha384-SR1sx49pcuLnqZUnnPwx6FCym0wLsk5JZuNx2bPPENzswTNFaQU1RDvt3wT4gWFG" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.min.js" integrity="sha384-j0CNLUeiqtyaRmlzUHCPZ+Gy5fQu0dQ6eZ/xAww941Ai1SxSY+0EQqNXNE6DZiVc" crossorigin="anonymous"></script>
+</body>
+</html>

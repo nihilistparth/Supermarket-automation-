@@ -1,0 +1,52 @@
+{% extends 'product/base.html' %}
+
+{% load hash %}
+
+{% block content %}
+
+    <h1> Total Transactions: {{num}} </h1> 
+
+    <hr>
+
+    <h2 style="color: rgb(26, 167, 238);">Select clerk to view their Transactions: </h2>
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+          Select User
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+            {% for cur_user in user_list %}
+            {% if not cur_user.is_superuser%}
+            <li><a class="dropdown-item" href="{% url 'product-user-report' cur_user.pk %}" target="_blank">{{cur_user.username}}</a></li> 
+            {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+
+    <hr>
+
+        {% if my_error_message %}
+            <div class="alert alert-danger">
+                <strong>{{ my_error_message|escape }}</strong>
+            </div>
+        {% endif %}
+
+    <br> <br>
+    <h2 style="color: rgb(26, 167, 238);">Enter start and end dates to get plot: </h2>
+    <form method="POST">
+        {% csrf_token %}
+        <strong>
+            <label for="start">Enter the start date: </label>
+        </strong>
+        <input type="date" id="start" name="start_date">
+        
+        <strong>
+            <label for="end">Enter the end date: </label>
+        </strong>
+         
+        <input type="date" id="end" name="end_date">  
+
+        <br><br>
+        <button type="submit" class="btn btn-lg btn-info">Enter</button>
+    </form>
+
+{% endblock content %}

@@ -1,0 +1,35 @@
+{% extends 'product/base.html' %}
+
+{% block content %}
+
+<br><br>
+<div class="container">
+    Add a new product
+    <a href="{% url 'product-add' %}">
+        <button class="btn btn-info" style="float:right;">
+            Add Product
+        </button>
+    </a>
+
+    <br><br>
+    
+    Edit an existing product
+    <a href="{% url 'product-edit' %}">
+        <button class="btn btn-info" style="float:right;">
+            Edit Product
+        </button>
+    </a>
+    
+    <br><br>
+
+    View the inventory of existing products
+    <a href="{% url 'product-view' %}">
+        <button class="btn btn-info" style="float:right;">
+            View Product
+        </button>
+    </a>
+    
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,48 @@
+{% extends 'product/base.html' %}
+
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+
+
+<div class="content-section">
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">Edit Product</legend>
+
+            {% if my_error_message %}
+            <div class="alert alert-danger">
+                <strong>{{ my_error_message|escape }}</strong>
+            </div>
+            {% endif %}
+
+
+            <h2>{{product.name}}</h2>
+            {% if form.errors %}
+
+                {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+
+            {{form|crispy}}
+        </fieldset>
+
+        <div class="form-group">
+            <br>
+            <button class="btn btn-outline-info mb-4" type="submit">Save</button>
+        </div>
+
+    </form>
+
+</div>
+
+{% endblock %}

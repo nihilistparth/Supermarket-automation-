@@ -1,0 +1,17 @@
+{% extends 'product/base.html' %}
+
+{% block content %}
+
+<h1 style="color: darkslategrey;">Your Transaction has been initiated...! </h1>
+
+<form action="{% url 'product-pay' %}" target="_blank">
+    {% csrf_token %}
+    <button class="btn btn-outline-success mb-4"  type="submit">Generate Bill!</button>
+</form>
+
+<form action="{% url 'account-home' %}">
+    <button class="btn btn-outline-success mb-4"  type="submit">Return to Home!</button>
+</form>
+
+
+{% endblock content %}

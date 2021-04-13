@@ -1,0 +1,36 @@
+{% extends 'account/base.html' %}
+
+{% load hash %}
+
+{% load static %}
+
+{% block content %}
+
+<h1>Username: {{username}}</h1>
+
+<h2>User ID: {{u_id}}</h2>
+
+<hr>
+<div class="container">
+    <div class="row text-muted border-bottom mb-2">
+        <div class="col-2 pl-5">Transaction ID</div>
+        <div class="col-1 px-0">Amount</div>
+        <div class="col-1 px-0">Date of Transaction </div>
+    </div>
+    
+    {% for transaction in transactions %}
+        
+        <div class="parent">
+            <div class="row highlight bg-light mb-2 py-2">
+                <div class="col-2 pl-5">{{ transaction.id }}</div>
+                <div class="col-1 px-0">{{ transaction.amount }}</div>
+                <div class="col-1 px-0">{{ transaction.created_at }}</div>
+        </div>
+    
+    {% endfor %}
+
+    
+</div>
+
+
+{% endblock content %}  

@@ -1,0 +1,94 @@
+{% extends 'product/base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% load hash %}
+
+{% load upper %}
+
+{% block content %}
+
+
+<div class="content-section">
+
+    <form method="POST" action="{% url 'product-transaction' %}">
+        {% csrf_token %}
+
+        <fieldset class="form-group">
+            <legend class="border-bottom mb-4">New Transaction</legend>
+
+            {% if my_error_message %}
+            <div class="alert alert-danger">
+                <strong>{{ my_error_message|escape }}</strong>
+            </div>
+            {% endif %}
+
+            {% if form.errors %}
+
+                {% for error in form.field_errors %}
+                    <div class="alert alert-danger">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+
+            {% endif %}
+
+
+            {{form|crispy}} 
+        </fieldset>
+
+        <div class="form-group">
+            <br>
+            <button class="btn btn-outline-success mb-4" type="submit">Add product</button>
+        </div>
+
+    </form>
+
+</div>
+
+<div class="row text-muted border-bottom mb-2">
+    <div class="col-2 pl-5">Name</div>
+    <div class="col-1 px-0">Quantity</div>
+    <div class="col-1 px-0">Selling Price</div>
+</div>
+
+{% for key,value in product_dict.items %}
+    <div class="parent">
+        <div class="row highlight bg-light mb-2 py-2">
+            {% with key|upper as k %}
+            <div class="col-2 pl-5">{{ k }}</div>
+            {% endwith %}
+
+            <div class="col-1 px-0">{{ value }}</div>
+
+            {% with product_list|hash:forloop.counter as product %}
+            <div class="col-1 px-0"> {{product.selling_price}} </div>
+            {% endwith %}
+        </div>
+    </div>
+{% endfor %}
+
+<div class="form-group">
+    <br>
+
+    <form action="{% url 'product-complete' %}">
+        {% csrf_token %}
+        <button class="btn btn-outline-success mb-4" type="submit">Proceed</button>
+    </form>
+    
+</div>
+
+<div class="form-group">
+    <br>
+
+    <form action="{% url 'product-clear' %}">
+        {% csrf_token %}
+        <button class="btn btn-outline-danger mb-4" type="submit">Clear Cart</button>
+    </form>
+    
+</div>
+
+
+{% endblock content %}

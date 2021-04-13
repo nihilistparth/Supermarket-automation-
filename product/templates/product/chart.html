@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+<meta charset="utf-8">
+<title>chatsjs</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+
+
+</head>
+
+<body class="container-fluid">
+<br>
+	<form action="{% url 'product-report' %}">
+		<button class = "btn btn-info" align="left">Go Back</button>
+	</form>
+
+<center class="row">
+	<h1>Report</h1>
+</center>
+<hr />
+<div class="row">
+	<div class="col-md-6">
+	<canvas id="QuantityLine"></canvas>
+	</div>
+	<div class="col-md-6">
+	<canvas id="QuantityBar"></canvas>
+	</div>
+
+    <div class="col-md-6">
+        <canvas id="ProfitLine"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="ProfitBar"></canvas>
+    </div>
+
+    <div class="col-md-6">
+        <canvas id="RevenueLine"></canvas>
+    </div>
+    <div class="col-md-6">
+        <canvas id="RevenueBar"></canvas>
+    </div>
+    
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+
+<script>
+	var endpoint = '/product/chart/api';
+
+	$.ajax({
+	method: "GET",
+	url: endpoint,
+	success: function(data) {
+
+		drawLineGraph(data, 'QuantityLine', "Quantity Sold", data.object_list, data.quantity_list);
+		drawBarGraph(data, 'QuantityBar', "Quantity Sold", data.object_list, data.quantity_list);
+
+        drawLineGraph(data, 'ProfitLine', "Profit", data.object_list, data.profit_list);
+		drawBarGraph(data, 'ProfitBar', "Profit", data.object_list, data.profit_list);
+
+        drawLineGraph(data, 'RevenueLine', "Revenue", data.object_list, data.revenue_list);
+		drawBarGraph(data, 'RevenueBar', "Revenue", data.object_list, data.revenue_list);
+
+		console.log("drawing");
+	},
+	error: function(error_data) {
+		console.log(error_data);
+	}
+	})
+
+
+	function drawLineGraph(data, id, chart_name, x, y) {
+	var labels = x;
+	var chartLabel = chart_name;
+	var chartdata = y;
+	var ctx = document.getElementById(id).getContext('2d');
+	var chart = new Chart(ctx, {
+		// The type of chart we want to create
+		type: 'line',
+
+		// The data for our dataset
+		data: {
+		labels: labels,
+		datasets: [{
+			label: chartLabel,
+			backgroundColor: 'rgb(255, 100, 200)',
+			borderColor: 'rgb(55, 99, 132)',
+			data: chartdata,
+		}]
+		},
+
+		// Configuration options go here
+		options: {
+		scales: {
+			xAxes: [{
+			display: true
+			}],
+			yAxes: [{
+			ticks: {
+				beginAtZero: true
+			}
+			}]
+		}
+		}
+
+	});
+	}
+
+	function drawBarGraph(data, id, chart_name, x, y) {
+	var labels = x;
+	var chartLabel = chart_name;
+	var chartdata = y;
+	var ctx = document.getElementById(id).getContext('2d');
+	var myChart = new Chart(ctx, {
+		type: 'bar',
+		data: {
+		labels: labels,
+		datasets: [{
+			label: chartLabel,
+			data: chartdata,
+			backgroundColor: [
+			'rgba(255, 99, 132, 0.2)',
+			'rgba(54, 162, 235, 0.2)',
+			'rgba(255, 206, 86, 0.2)',
+			'rgba(75, 192, 192, 0.2)',
+			'rgba(153, 102, 255, 0.2)',
+			'rgba(255, 159, 64, 0.2)'
+			],
+			borderColor: [
+			'rgba(255, 99, 132, 1)',
+			'rgba(54, 162, 235, 1)',
+			'rgba(255, 206, 86, 1)',
+			'rgba(75, 192, 192, 1)',
+			'rgba(153, 102, 255, 1)',
+			'rgba(255, 159, 64, 1)'
+			],
+			borderWidth: 1
+		}]
+		},
+		options: {
+		scales: {
+			yAxes: [{
+			ticks: {
+				beginAtZero: true
+			}
+			}]
+		}
+		}
+	});
+	}
+
+    
+
+
+</script>
+</body>
+
+</html>

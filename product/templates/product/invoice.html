@@ -1,0 +1,99 @@
+{% load hash %}
+
+{% load multiply %}
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+    <title>Invoice</title>
+    
+    <style type="text/css">
+        body {
+            font-weight: 200;
+            font-size: 14px;
+        }
+
+        .header {
+            font-size: 20px;
+            font-weight: 100;
+            text-align: center;
+            color: #007cae;
+        }
+
+        .title {
+            font-size: 22px;
+            font-weight: 100;
+            /* text-align: right;*/
+            padding: 10px 20px 0px 20px;
+        }
+
+        .title span {
+            color: #007cae;
+        }
+
+        .details {
+            padding: 10px 20px 0px 20px;
+            text-align: left !important;
+            /*margin-left: 40%;*/
+        }
+
+        .hrItem {
+            border: none;
+            height: 1px;
+            /* Set the hr color */
+            color: #333;
+            /* old IE */
+            background-color: #fff;
+            /* Modern Browsers */
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <strong style="text-align: right;">
+        Date: {{today}}
+    </strong>
+
+    <h1 style="text-align: center;">Supermarket Automation Software</h1>
+
+    <h3 style="text-align: center;">Invoice for Order number {{order_id}}</h3>
+
+    <table>
+
+        <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>M.R.P.</th>
+            <th>Amount</th>
+        </tr>
+
+        
+        {% for key,val in product_dict.items %}
+        <tr style="text-align: center;">
+        {% with product_list|hash:forloop.counter as product %}
+            <td>{{ product.name }}</td>
+            <td>{{ val }}</td>
+            <td>{{ product.selling_price }}</td>
+            <td>{{ val|multiply:product.selling_price }}</td>        
+        {% endwith %}
+        </tr>   
+        {% endfor %}
+        
+        
+    </table>
+
+    <br>
+
+            <div class='details' style="text-align: right;">
+                <strong>
+                    Total: {{amount}} 
+                </strong>         
+                <hr class='hrItem'>
+            </div>
+
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+{% extends 'account/base.html' %}
+
+{% load hash %}
+
+{% load static %}
+{% block content %}
+
+<div class='container' style="font-family:Montserrat; font-size: 70px; margin-left: 100px;">
+    
+    {% if user.is_superuser %}
+    <img src="{% static 'account/boss.png' %}" width=350 align=right>
+    {% else %}
+    <img src="{% static 'account/clerk.png' %}" width=450 align=right>
+    {% endif %}
+    <br><br>
+    <h1>Username: {{user.username}}</h1>
+    <h1>Email: {{user.email}}</h1>
+    {% if user.is_superuser %}
+    <h1>Position: Manager</h1>
+    {% else %}
+    <h1>Position: Clerk</h1>
+
+</div>
+
+<br>
+<hr>
+<div class="container">
+    <div class="row text-muted border-bottom mb-2">
+        <div class="col-2 pl-5">Transaction ID</div>
+        <div class="col-1 px-0">Amount</div>
+        <div class="col-1 px-0">Date of Transaction </div>
+    </div>
+    
+    {% for transaction in transactions %}
+        
+        <div class="parent">
+            <div class="row highlight bg-light mb-2 py-2">
+                <div class="col-2 pl-5">{{ transaction.id }}</div>
+                <div class="col-1 px-0">{{ transaction.amount }}</div>
+                <div class="col-1 px-0">{{ transaction.created_at }}</div>
+        </div>
+    
+    {% endfor %}
+
+    
+</div>
+
+{% endif %}   
+
+
+
+{% endblock content %}  
