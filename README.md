@@ -2,8 +2,5 @@
 
 ## Made By 19CS30034
 ## Parth Tusham  
-## Technologies used are:  
-###Django  
-###javascript  
-###HTML  
-##for further information refer the pdf provided
+## Technologies used are:  django, javascript and HTML    
+for further information refer the pdf provided
