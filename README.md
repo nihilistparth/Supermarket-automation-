@@ -107,7 +107,7 @@ classbased and uses SQLite).
 
 
 
-### for further information refer the Readme.pdf file
+#### For further information refer the Readme.pdf file
 
 
 
