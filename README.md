@@ -29,15 +29,6 @@
 - The manager can view the various transaction
     and can manage the clerks and the inventory.
 
-
-##### Problem
-
-##### Specification
-
-##### and Users
-
-##### Involved
-
 #### Manager:
 
 - Edit Users
@@ -116,7 +107,7 @@ classbased and uses SQLite).
 
 
 
-
+### for further information refer the report.pdf file
 
 
 
